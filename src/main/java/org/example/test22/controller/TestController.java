@@ -12,7 +12,7 @@ public class TestController {
 
     @GetMapping("/hi")
     public ResponseEntity<Object> test() {
-        String result = "test";
+        String result = "testㅎㅎㅎ";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
