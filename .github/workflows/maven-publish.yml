@@ -54,10 +54,10 @@ jobs:
         with:
           context: .
           push: true
-          tags: chanchan-lee/test2:latest
+          tags: chanchanlee/test2:latest
 
       # 도커 컨테이너 실행
       - name: Run Docker container
         run: |
-          docker run -d --name test2 -p 8080:8080 chanchan-lee/test2:latest
+          docker run -d --name test2 -p 8080:8080 chanchanlee/test2:latest
           docker ps -a
