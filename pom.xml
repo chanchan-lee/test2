@@ -71,7 +71,7 @@
 
     <distributionManagement>
         <repository>
-            <id>chanchan-lee</id>
+            <id>github</id>
             <name>GitHub OWNER Apache Maven Packages</name>
             <url>https://maven.pkg.github.com/chanchan-lee/test22</url>
         </repository>
