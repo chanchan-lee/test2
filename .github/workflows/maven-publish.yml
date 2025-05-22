@@ -54,10 +54,10 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.repository }}:latest
+          tags: chanchan-lee/test2:latest
 
       # 도커 컨테이너 실행
       - name: Run Docker container
         run: |
-          docker run -d --name test2 -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.repository }}:latest
+          docker run -d --name test2 -p 8080:8080 chanchan-lee/test2:latest
           docker ps -a
