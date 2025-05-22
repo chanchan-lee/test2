@@ -61,3 +61,7 @@ jobs:
         run: |
           docker run -d --name test2 -p 8080:8080 chanchanlee/test2:latest
           docker ps -a
+      - name: Test container with curl
+        run: |
+          sleep 5 # 앱이 뜨는 시간 대기
+          curl -v http://localhost:8080
