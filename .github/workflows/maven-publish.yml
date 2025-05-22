@@ -27,7 +27,7 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
-      # Docker 빌드 및 GHCR 푸시
+      # GHCR 푸시
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -35,36 +35,29 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image to GHCR
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:latest
-          # 필요하다면 추가 태그도 가능
-          # tags: |
-          #   ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:latest
-          #   ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ github.sha }}
 
-      # (옵션) Docker Hub에 푸시하려면 아래도 추가
+      # Docker Hub 푸시
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_NAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Build and push to Docker Hub
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: chanchanlee/testi:latest
-      - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest .
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.repository }}:latest
 
-      - name: Push Docker image
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
-
+      # 도커 컨테이너 실행
       - name: Run Docker container
         run: |
-            docker run -d --name myapp-test -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
-            docker ps -a
+          docker run -d --name test2 -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.repository }}:latest
+          docker ps -a
